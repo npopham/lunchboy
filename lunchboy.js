@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-var restaurants = ["Blue Ribbon", "Jimmy's", "Cabot's", "Pho 1", "Ixtapa", "Conley's"];
+var restaurants = ["Blue Ribbon", "Jimmy's", "Cabot's", "Pho 1", "Ixtapa", "Conley's", "Joseph's Two"];
 
 function main(req, res) {
     var index = Math.floor(Math.random() * restaurants.length);
