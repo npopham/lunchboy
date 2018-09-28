@@ -1,0 +1,5 @@
+{
+  "name": "Lunchboy",
+  "description": "Slack & Heroku app for suggesting lunch places",
+  "keywords": ["node", "express", "heroku"]
+}
