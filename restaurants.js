@@ -6,7 +6,7 @@ async function count() {
 }
 
 async function getSelected(restaurantIds) {
-    return db.any("SELECT * FROM restaurant WHERE restaurantId = ANY(ARRAY($1))", restaurantIds);    
+        return db.any("SELECT * FROM restaurant WHERE restaurant_id = ANY('{$1}')", restaurantIds);    
 }
 
 module.exports = {
