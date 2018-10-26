@@ -1,8 +1,32 @@
 const crypto = require('crypto');
+const restaurants = require('./restaurants');
 
-var restaurants = ["Blue Ribbon", "Jimmy's", "Cabot's", "Pho 1", "Ixtapa", "Conley's", "Joseph's Two"];
+//var restaurants = ["Blue Ribbon", "Jimmy's", "Cabot's", "Pho 1", "Ixtapa", "Conley's", "Joseph's Two"];
 
 function main(req, res) {
+    var numSuggestions = 3;
+
+    restaurants.count()
+        .then(function (count) { 
+            if(count < numSuggestions) {
+                numSuggestions = count;
+            }
+
+            var suggestedIds = [];
+            while(suggestedIds.length < numSuggestions) {
+                var newRandom = Math.floor(Math.random() * count);
+
+                if(suggestedIds.indexOf(newRandom) >= 0) {
+                    suggestedIds.push(newRandom);
+                }
+            }
+
+            restaurants.getSelected(suggestedIds)
+                .then(function(restaurants) {
+
+                });
+        });
+
     var index = Math.floor(Math.random() * restaurants.length);
     var index2 = Math.floor(Math.random() * restaurants.length);
 
