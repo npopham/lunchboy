@@ -3,34 +3,26 @@ const restaurants = require('./restaurants');
 
 //var restaurants = ["Blue Ribbon", "Jimmy's", "Cabot's", "Pho 1", "Ixtapa", "Conley's", "Joseph's Two"];
 
-function main(req, res) {
+async function main(req, res) {
     var numSuggestions = 3;
 
-    restaurants.count()
-        .then(function (count) { 
-            if(count < numSuggestions) {
-                numSuggestions = count;
-            }
+    let count = await restaurants.count();
+    if(count < numSuggestions) {
+        numSuggestions = count;
+    }
 
-            var suggestedIds = [];
-            while(suggestedIds.length < numSuggestions) {
-                var newRandom = Math.floor(Math.random() * count);
+    var suggestedIds = [];
+    while(suggestedIds.length < numSuggestions) {
+        var newRandom = Math.floor(Math.random() * count);
 
-                if(suggestedIds.indexOf(newRandom) >= 0) {
-                    suggestedIds.push(newRandom);
-                }
-            }
+        if(suggestedIds.indexOf(newRandom) >= 0) {
+            suggestedIds.push(newRandom);
+        }
+    }
 
-            restaurants.getSelected(suggestedIds)
-                .then(function(restaurants) {
+    var selectedRestaurants = await restaurants.getSelected(suggestedIds);   
 
-                });
-        });
-
-    var index = Math.floor(Math.random() * restaurants.length);
-    var index2 = Math.floor(Math.random() * restaurants.length);
-
-	var message = `Hello! I am just a baby and I only know ${restaurants.length} restaurants...but may I suggest ${restaurants[index]} or ${restaurants[index2]}?`;
+	var message = `Hello! I am just a baby and I only know ${count} restaurants...but may I suggest ${selectedRestaurants[0].full_name}, ${selectedRestaurants[1].full_name}  or ${selectedRestaurants[2].full_name}?`;
 	res.send({
         response_type: "in_channel",
 		text: message
